@@ -27,7 +27,7 @@ class Records(Base):
     __tablename__ = "records"
 
     record_id = Column("record_id", Integer, nullable=False, unique=True, primary_key=True, autoincrement=True)
-    record_type = Column("type", String, nullable=False)
+    record_type = Column("record_type", String, nullable=False)
     record = Column("record", String, nullable=False)
     ttl = Column("ttl", Integer, nullable=False)
 
@@ -35,7 +35,7 @@ class Records(Base):
     def domain_id(self):
         return Column(
             Integer,
-            ForeignKey("Records.domain_id", ondelete="CASCADE"),
+            ForeignKey("users.domain_id", ondelete="CASCADE"),
             nullable=False,
         )
 

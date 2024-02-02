@@ -1,31 +1,14 @@
 from table import Users, Records
 from session import session_scope
-from sqlalchemy import select
+from sqlalchemy import select, update, delete
 
 
-# обновить домен
-# def update_domain(domain_name:str, domain_id: int):
-#    stmt = (
-#        update(Users)
-#        .values(.......)
-#        .where(Users.domain_id == domain_id)
-
-
-# обновить запись
-# def update_record(type:str, record:str, TTL, record_id: int):
-#    stmt = (
-#        update(Records)
-#        .values(........)
-#        .where(Records.record_id == record_id)
-#    )
-
-
-# удалить домен
-# def delete_domain(domain_id:int):
-#    stmt = delete(Users).where(Users.domain_id == domain_id)
-#    with session_scope() as s:
-#        result = s.execute(stmt)
-#    return result
+#read
+def read_domain(domain_id: int):
+    stmt = select(Users).where(Users.domain_id == domain_id)
+    with session_scope() as s:
+        result = s.execute(stmt).scalar()
+    return result
 
 
 # создать домен
@@ -41,6 +24,30 @@ def create_domain(domain_name: str, user_id: int):
     return result
 
 
+# обновить домен
+def update_domain(domain_name:str, domain_id: int):
+    stmt = update(Users).values(domain_name=domain_name).where(Users.domain_id == domain_id)
+    with session_scope() as s:
+        s.execute(stmt)
+    return read_domain(domain_id)
+
+
+#delete
+def delete_domain(domain_id: int):
+    stmt = delete(Users).where(Users.domain_id == domain_id)
+    with session_scope() as s:
+        result = s.execute(stmt)
+    return result
+
+
+#read
+def read_record(domain_id: int):
+    stmt = select(Records).where(Records.domain_id == domain_id)
+    with session_scope() as s:
+        result = s.execute(stmt).scalars().all()
+    return result
+
+
 # создать запись
 def create_record(domain_id: int, record_type: str, record: str, ttl: int):
     record = Records(
@@ -52,31 +59,30 @@ def create_record(domain_id: int, record_type: str, record: str, ttl: int):
     with session_scope() as s:
         s.add(record)
         s.flush()
-        result = s.execute(select(Records).where(Records.record_id == record.record_id))
-    return result
+        s.commit()
+    return record
 
 
-
-
-
-# read
-
-#def reade_table(domain_id:int):
-#    stmt = select(Users).where(Users.domain_id == domain_id)
-#    with session_scope() as s:
-#        query = s.query(Users, Records).filter(Users.domain_id == Records.domain_id).all()
-#    return query
-
-
-def read_t(domain_id: int):
-    stmt = select(Users, Records).where(Users.domain_id == domain_id, Records.domain_id == domain_id)
+def read_record_by_record(record_id: int):
+    stmt = select(Records).where(Records.record_id == record_id)
     with session_scope() as s:
-        result = s.execute(stmt).all
+        result = s.execute(stmt).scalars().all()
     return result
 
 
-#def read_id(domain_id: int):
-#    stmt = select(Users).where(Users.domain_id == domain_id)
-#    with session_scope() as s:
-#        result = s.execute(stmt).scalar()
-#    return result
+# обновить запись
+def update_record(domain_id: int, record_type: str, record: str, ttl: int, record_id: int):
+    stmt = (update(Records).values(domain_id=domain_id, record_type=record_type, record=record, ttl=ttl)
+            .where(Records.record_id == record_id))
+    with session_scope() as s:
+        s.execute(stmt)
+    return read_record_by_record(record_id)
+
+
+# удалить домен
+def delete_domain(domain_id:int):
+    stmt = delete(Users).where(Users.domain_id == domain_id)
+    with session_scope() as s:
+        result = s.execute(stmt)
+    return result
+
