@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Response, Header
 from pydantic import BaseModel, Field
-from functions import read_domain, create_domain, create_record, update_domain, read_record, update_record, delete_domain, read_record_by_record
+from src.db.functions import read_domain, create_domain, create_record, update_domain, read_record, update_record, delete_domain, read_record_by_record
 
 
 app = FastAPI()

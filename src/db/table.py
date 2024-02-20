@@ -18,6 +18,7 @@ class Users(Base):
 
     def dict(self):
         return dict(
+            domain_id=self.domain_id,
             user_id=self.user_id,
             domain_name=self.domain_name
         )
@@ -47,10 +48,11 @@ class Records(Base):
 
     def dict(self):
         return dict(
+            record_id=self.record_id,
             domain_id=self.domain_id,
             record_type=self.record_type,
             record=self.record,
-            TTL=self.ttl
+            ttl=self.ttl
         )
 
 
