@@ -1,6 +1,6 @@
 from fastapi.testclient import TestClient
 from src.app.main import app
-from src.db.functions import read_domain, read_record
+from src.db.functions import read_domain, read_record, read_record_by_record
 
 
 client = TestClient(app)
@@ -26,7 +26,7 @@ def test_read_d_error():
 
 
 def test_create_domain():
-    response = client.post("/domain", headers={"X-User": "11"}, json={"domain_name": "Test 20"})
+    response = client.post("/domain", headers={"X-User": "20"}, json={"domain_name": "Test 222"})
     data = response.json()
     domain_id = data["domain_id"]
     assert response.status_code == 200
@@ -35,14 +35,14 @@ def test_create_domain():
 
 def test_update_domain_correct():
     domain_id = 10
-    response = client.put(f"/domain/{domain_id}", json={"domain_name": "test21"})
+    response = client.put(f"/domain/{domain_id}", json={"domain_name": "test212"})
     assert response.status_code == 200
     assert response.json() == read_domain(domain_id).dict()
 
 
 def test_update_domain_error():
-    domain_id = 150
-    response = client.put(f"/domain/{domain_id}", json={"domain_name": "test1"})
+    domain_id = 101
+    response = client.put(f"/domain/{domain_id}", json={"domain_name": "test101"})
     assert response.status_code == 404
 
 
@@ -79,18 +79,20 @@ def test_read_r_error():
 def test_create_record():
     response = client.post("/record", json={"domain_id": 10, "record_type": "testA", "record": "test127.0.0.1", "ttl": 1010})
     data = response.json()
-    domain_id = data["domain_id"]
+    record_id = data["record_id"]
     assert response.status_code == 200
+    assert response.json() == read_record_by_record(record_id).dict()
 
 
 def test_update_record_correct():
-    record_id = 21
+    record_id = 13
     response = client.put(f"/record/{record_id}", json={"domain_id": 10, "record_type": "test_updA", "record": "udateNEW", "ttl": 123})
     assert response.status_code == 200
+    assert response.json() == read_record_by_record(record_id).dict()
 
 
 def test_update_record_error():
-    record_id = 222
+    record_id = 111
     response = client.put(f"/record/{record_id}", json={"domain_id": 10, "record_type": "test_updA", "record": "udateNEW", "ttl": 123})
     assert response.status_code == 404
 
