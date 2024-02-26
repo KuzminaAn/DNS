@@ -8,7 +8,7 @@ app = FastAPI()
 
 @app.get("/")
 async def root():
-    return {"message": "Helllllo"}
+    return {"message": "API LIVE!"}
 
 
 # read domain
@@ -36,13 +36,13 @@ async def create_d(item: CreateItem, user_id: int = Header(default=None, alias="
 #update domain
 @app.put("/domain/{domain_id}")
 async def update_d(item: CreateItem, domain_id: int):
-    result = read_d(domain_id)
+    result = read_domain(domain_id)
     if not result:
         return Response(status_code=404)
     result = update_domain(item.domain_name, domain_id)
     return result
 
-#curl -X PUT http://127.0.0.1:7000/domain/1  -H "Content-type: application/json" -d '{"domain_name": "NEW2"}'
+#curl -X PUT http://127.0.0.1:7000/domain/100  -H "Content-type: application/json" -d '{"domain_name": "NEW777"}'
 
 
 #delete
@@ -79,7 +79,7 @@ async def create_r(item: CreateRecords):
     return result
 
 
-#curl -X POST http://127.0.0.1:7000/record -H "Content-type: application/json" -d '{"domain_id": 5, "record_type": "A12", "record": "127.0.0.1", "ttl": 1234}'
+#curl -X POST http://127.0.0.1:7000/record -H "Content-type: application/json" -d '{"domain_id": 6, "record_type": "A1234", "record": "127.0.0.9", "ttl": 12345}'
 
 
 #update record
@@ -92,6 +92,6 @@ async def update_r(item: CreateRecords, record_id: int):
     result = update_record(item.domain_id, item.record_type, item.record, item.ttl, record_id)
     return result
 
-#curl -X PUT http://127.0.0.1:7000/record/8  -H "Content-type: application/json" -d '{"domain_id": 1, "record_type": "AA", "record": "NEW", "ttl": 123}'
+#curl -X PUT http://127.0.0.1:7000/record/8  -H "Content-type: application/json" -d '{"domain_id": 1, "record_type": "AA", "record": "NEW", "ttl": 12355}'
 
 
