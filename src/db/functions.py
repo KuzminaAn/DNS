@@ -1,5 +1,5 @@
-from table import Users, Records
-from session import session_scope
+from src.db.table import Users, Records
+from src.db.session import session_scope
 from sqlalchemy import select, update, delete
 
 
@@ -66,7 +66,7 @@ def create_record(domain_id: int, record_type: str, record: str, ttl: int):
 def read_record_by_record(record_id: int):
     stmt = select(Records).where(Records.record_id == record_id)
     with session_scope() as s:
-        result = s.execute(stmt).scalars().all()
+        result = s.execute(stmt).scalar()
     return result
 
 
