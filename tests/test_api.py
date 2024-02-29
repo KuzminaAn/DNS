@@ -1,8 +1,8 @@
 from fastapi.testclient import TestClient
+
 from src.app.main import app
 from src.db.functions import read_domain, read_record, read_record_by_record
 from tests.test_vars import VariableDomain, VariableRecord
-
 
 client = TestClient(app)
 
@@ -27,7 +27,11 @@ def test_read_d_error(fixture_test_read_d_error):
 
 
 def test_create_domain():
-    response = client.post("/domain", headers=VariableDomain.header_create_domain, json=VariableDomain.json_create_domain)
+    response = client.post(
+        "/domain",
+        headers=VariableDomain.header_create_domain,
+        json=VariableDomain.json_create_domain,
+    )
     data = response.json()
     domain_id = data["domain_id"]
     assert response.status_code == 200
@@ -36,14 +40,18 @@ def test_create_domain():
 
 def test_update_domain_correct(fixture_test_update_domain_correct):
     domain_id = fixture_test_update_domain_correct
-    response = client.put(f"/domain/{domain_id}", json=VariableDomain.json_update_domain_correct)
+    response = client.put(
+        f"/domain/{domain_id}", json=VariableDomain.json_update_domain_correct
+    )
     assert response.status_code == 200
     assert response.json() == read_domain(domain_id).dict()
 
 
 def test_update_domain_error(fixture_test_update_domain_error):
     domain_id = fixture_test_update_domain_error
-    response = client.put(f"/domain/{domain_id}", json=VariableDomain.json_update_domain_error)
+    response = client.put(
+        f"/domain/{domain_id}", json=VariableDomain.json_update_domain_error
+    )
     assert response.status_code == 404
 
 
@@ -87,12 +95,16 @@ def test_create_record():
 
 def test_update_record_correct(fixture_test_update_record_correct):
     record_id = fixture_test_update_record_correct
-    response = client.put(f"/record/{record_id}", json=VariableRecord.json_update_record_correct)
+    response = client.put(
+        f"/record/{record_id}", json=VariableRecord.json_update_record_correct
+    )
     assert response.status_code == 200
     assert response.json() == read_record_by_record(record_id).dict()
 
 
 def test_update_record_error(fixture_test_update_record_error):
     record_id = fixture_test_update_record_error
-    response = client.put(f"/record/{record_id}", json=VariableRecord.json_update_record_error)
+    response = client.put(
+        f"/record/{record_id}", json=VariableRecord.json_update_record_error
+    )
     assert response.status_code == 404
