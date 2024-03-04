@@ -15,7 +15,7 @@ def fixture_test_read_d_error():
 
 @pytest.fixture
 def fixture_test_update_domain_correct():
-    domain_id = 18
+    domain_id = 4
     return domain_id
 
 
@@ -27,19 +27,19 @@ def fixture_test_update_domain_error():
 
 @pytest.fixture
 def fixture_test_delete_correct():
-    domain_id = 10
+    domain_id = 5
     return domain_id
 
 
 @pytest.fixture
 def fixture_test_delete_error():
-    domain_id = 11
+    domain_id = 5
     return domain_id
 
 
 @pytest.fixture
 def fixture_test_read_r_correct():
-    domain_id = 6
+    domain_id = 4
     return domain_id
 
 
@@ -51,7 +51,7 @@ def fixture_test_read_r_error():
 
 @pytest.fixture
 def fixture_test_update_record_correct():
-    record_id = 9
+    record_id = 5
     return record_id
 
 
