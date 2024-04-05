@@ -6,7 +6,6 @@ class CreateDomains(BaseModel):
 
 
 class CreateRecords(BaseModel):
-    domain_id: int
     record_type: str = Field(min_length=1)
     record: str = Field(min_length=1)
     ttl: int
