@@ -8,7 +8,7 @@ class VariableDomain:
 class VariableRecord:
     json_create_record = {
         "domain_id": 1,
-        "record_type": "test create 04/03",
+        "record_type": "test create 05/04",
         "record": "127.0.0.1",
         "ttl": 100,
     }
