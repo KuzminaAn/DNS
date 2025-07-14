@@ -1,9 +1,7 @@
 from contextlib import contextmanager
 
 import sqlalchemy as sa
-
 from sqlalchemy.orm import sessionmaker
-
 
 engine = "postgresql://postgres:@127.0.0.1:5455/second_project"
 

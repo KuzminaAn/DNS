@@ -1,0 +1,9 @@
+host: localhost
+port: 7000
+
+db:
+  name: second_project
+  user: postgres
+  host: 127.0.0.1
+  port: 5455
+  database: postgresql
