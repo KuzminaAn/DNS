@@ -15,4 +15,4 @@ EXPOSE 7000:7000
 
 USER code
 
-CMD ["uvicorn", "src.app.main:app", "--reload", "--host", "0.0.0.0", "--port", "7000"]
+CMD ["uvicorn", "main:app", "--reload", "--host", "0.0.0.0", "--port", "7000docker-compose up --build -d"]
